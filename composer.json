@@ -21,7 +21,7 @@
 		
 	},
     "scripts": {
-        "post-install-cmd": "OGrosko\\Composer\\InstallerScripts::postPackageInstall",
-        "post-update-cmd": "OGrosko\\Composer\\InstallerScripts::postPackageInstall"
+        "post-package-install": "OGrosko\\Composer\\InstallerScripts::postPackageInstall",
+        "post-package-update": "OGrosko\\Composer\\InstallerScripts::postPackageInstall"
     }
 }
