@@ -6,9 +6,11 @@ use OGrosko\Composer\Exception\Typo3ComposerMaintenanceException;
 
 class Typo3ComposerMaintenance {
 
-	const MAINTENANCE_FILENAME = 'maintenance.html';
+	const MAINTENANCE_FILENAME = '503.html';
 	const MAINTENANCE_TEMPLATE_PATH = 'Templates';
-    const EXTRA_TEMPLATE_KEY = 'og-composer-template-path';
+    const EXTRA_KEY = 'ogrosko-composer-typo3composermaintenance';
+    const EXTRA_TEMPLATE_KEY = 'template-path';
+    const EXTRA_MAINTENANCE_EXEPTIONS_IP_KEY = 'exclude-ips';
 
     /**
      * Enable maintenance mode
@@ -85,9 +87,9 @@ class Typo3ComposerMaintenance {
         $path = self::MAINTENANCE_TEMPLATE_PATH;
         $dir = __DIR__;
 
-        if (isset($extra[self::EXTRA_TEMPLATE_KEY])){
+        if (isset($extra[self::EXTRA_KEY]) and isset($extra[self::EXTRA_KEY][self::EXTRA_TEMPLATE_KEY])){
             $dir = $event->getComposer()->getConfig()->get('vendor-dir') . DIRECTORY_SEPARATOR . '..';
-            $path = $extra[self::EXTRA_TEMPLATE_KEY];
+            $path = $extra[self::EXTRA_KEY][self::EXTRA_TEMPLATE_KEY];
         }
 
         $filePath = $dir . DIRECTORY_SEPARATOR . rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $tplName;

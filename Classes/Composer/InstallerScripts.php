@@ -15,11 +15,9 @@ class InstallerScripts {
     const HTACCESS_FILENAME = '.htaccess';
 
     /**
-     * @param PackageEvent $event
+     * @param PackageEvent|Event $event
      */
-	public static function postPackageInstall(PackageEvent $event) {
-//	public static function postPackageInstall(Event $event) {
-        $package = $event->getComposer()->getPackage();
+	public static function postPackageInstall($event) {
         $dir = $event->getComposer()->getConfig()->get('vendor-dir') . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
         $filePath = $dir . self::HTACCESS_FILENAME;
         if (file_exists($filePath)){
@@ -80,7 +78,7 @@ class InstallerScripts {
 '<IfModule mod_rewrite.c>
     RewriteCond %{DOCUMENT_ROOT}'. $maintenanceFile .' -f
     RewriteCond %{REQUEST_URI} !'. $maintenanceFile .'
-    RewriteCond %{REMOTE_ADDR} !^12\.34\.56\.78$
+    #RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
     RewriteCond %{REQUEST_FILENAME} !.(gif|jpe?g|png|css|js)$
     RewriteRule  ^(.*) '. $maintenanceFile .' [R=503,L]
     ErrorDocument 503 '. $maintenanceFile . '
