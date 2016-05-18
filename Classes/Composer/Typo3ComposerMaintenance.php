@@ -7,7 +7,7 @@ use OGrosko\Composer\Exception\Typo3ComposerMaintenanceException;
 class Typo3ComposerMaintenance {
 
 	const MAINTENANCE_FILENAME = '503.html';
-	const MAINTENANCE_TEMPLATE_PATH = 'Templates';
+	const MAINTENANCE_TEMPLATE_PATH = '../../Templates';
     const EXTRA_KEY = 'ogrosko-composer-typo3composermaintenance';
     const EXTRA_TEMPLATE_KEY = 'template-path';
     const EXTRA_MAINTENANCE_EXEPTIONS_IP_KEY = 'exclude-ips';
