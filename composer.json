@@ -1,0 +1,23 @@
+{
+	"name"             : "ogrosko/typo3-composer-maintenance",
+	"description"      : "Composer pre/post scripts for enabling/disabling maintenance mode for typo3",
+	"keywords"         : ["maintenance", "typo3", "composer"],
+	"type"             : "composer-scripts",
+	"license"          : "GPL-3.0",
+	"minimum-stability": "dev",
+	"version"		   : "0.0.1",
+	"authors"          : [
+		{
+			"name" : "Ondrej Grosko",
+			"email": "ogrosko@gmail.com"
+		}
+	],
+	"autoload"         : {
+		"psr-4": {
+			"OGrosko\\": "Classes/"
+		}
+	},
+	"require"          : {
+		
+	}
+}
