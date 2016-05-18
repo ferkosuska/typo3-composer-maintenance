@@ -12,12 +12,15 @@
 			"email": "ogrosko@gmail.com"
 		}
 	],
-	"autoload"         : {
+	"autoload": {
 		"psr-4": {
 			"OGrosko\\": "Classes/"
 		}
 	},
-	"require"          : {
+	"require": {
 		
-	}
+	},
+    "scripts": {
+        "post-package-install": "OGrosko\\Composer\\InstallerScripts::postPackageInstall"
+    }
 }
