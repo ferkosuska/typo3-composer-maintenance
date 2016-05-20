@@ -20,16 +20,31 @@ class Typo3ComposerMaintenance {
      * @throws Typo3ComposerMaintenanceException
      */
 	public static function maintenance_enable(Event $event) {
-		$file = self::getMaintenanceFilePath($event);
+        $io = $event->getIO();
+
+        if (self::isMaintenanceEnabled()) {
+            $io->write('Maintenance mode already enabled. Nothing to do.');
+            if (!$io->askConfirmation('Do you want to update templates or '.InstallerScripts::HTACCESS_FILENAME.' files? [yes/no:default]:', false)) {
+                return;
+            }
+        }
+        else {
+            $proceed = $io->askConfirmation('Do you want to enable maintenance mode? [yes/no:default]:', false);
+            if (!$proceed) return;
+        }
+
+
+        $file = self::getMaintenanceFilePath();
 		
 		$maintenance_string = file_get_contents(self::getTemplatePath($event));
 		if (file_exists($file)) {
 			unlink($file);
 		}
 		$result = file_put_contents($file, $maintenance_string);
+        InstallerScripts::htaccessInstall($event);
 
 		if ($result !== false) {
-			$event->getIO()->write(">> Maintenance mode successfully enabled <<");
+			$event->getIO()->write("-- Maintenance mode successfully enabled --");
 		}
 		else {
 			throw new Exception\Typo3ComposerMaintenanceException('Problem with enabling maintenance mode');
@@ -47,7 +62,17 @@ class Typo3ComposerMaintenance {
      * @throws Typo3ComposerMaintenanceException
      */
 	public static function maintenance_disable(Event $event) {
-		$file = self::getMaintenanceFilePath($event);
+        $io = $event->getIO();
+
+        if (!self::isMaintenanceEnabled()) {
+            $io->write('Maintenance mode is disabled. Nothing to do.');
+            return;
+        }
+
+        $proceed = $io->askConfirmation('Do you want to disable maintenance mode? [yes/no:default]:', false);
+        if (!$proceed) return;
+
+		$file = self::getMaintenanceFilePath();
 
 		$result = true;
 
@@ -56,7 +81,7 @@ class Typo3ComposerMaintenance {
 		}
 
 		if ($result) {
-			$event->getIO()->write('>> Maintenance mode successfully disabled <<');
+			$event->getIO()->write('-- Maintenance mode successfully disabled --');
 		}
 		else {
 			throw new Exception\Typo3ComposerMaintenanceException('Problem with disabling Wordpress maintenance mode');
@@ -72,6 +97,14 @@ class Typo3ComposerMaintenance {
 	private static function getMaintenanceFilePath() {		
 		return getcwd() . DIRECTORY_SEPARATOR . self::MAINTENANCE_FILENAME;
 	}
+
+    /**
+     * @return bool
+     */
+    private static function isMaintenanceEnabled() {
+        $filePath = self::getMaintenanceFilePath();
+        return file_exists($filePath);
+    }
 
     /**
      * Get template path
@@ -99,4 +132,6 @@ class Typo3ComposerMaintenance {
 
 		return $filePath;
 	}
+
+
 }
