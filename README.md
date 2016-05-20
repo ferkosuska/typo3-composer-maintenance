@@ -28,8 +28,8 @@ Add following config in `scripts` section of your `composer.json` file
 ## Config
 Also some extra config avalible in `extra` section
 
-	* `template-path` - use your custom maintenance template path
-	* `exclude-ips` - exclude your ip from maintenance mode
+* `template-path` - use your custom maintenance template path
+* `exclude-ips` - exclude your ip from maintenance mode
 
 ```json
 "extra": {
