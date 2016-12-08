@@ -10,8 +10,8 @@ use OGrosko\Composer\Exception\InstallerScriptException;
  */
 class InstallerScripts {
 
-    const HTACCESS_MARKER_START = '###'.self::class.'_start###'.PHP_EOL;
-    const HTACCESS_MARKER_END = PHP_EOL.'###'.self::class.'_end###';
+    const HTACCESS_MARKER_START = '###OGrosko\Composer\InstallerScripts_start###';
+    const HTACCESS_MARKER_END = '###OGrosko\Composer\InstallerScripts_end###';
     const HTACCESS_FILENAME = '.htaccess';
 
     /**
@@ -89,16 +89,16 @@ class InstallerScripts {
             }
         }
 
-        return self::HTACCESS_MARKER_START.
+        return self::HTACCESS_MARKER_START.PHP_EOL.
 '<IfModule mod_rewrite.c>
     RewriteCond %{DOCUMENT_ROOT}'. $maintenanceFile .' -f
     RewriteCond %{REQUEST_URI} !'. $maintenanceFile .'
-'. $ipExclusionsHtaccessString .'
+    '. $ipExclusionsHtaccessString .'
     RewriteCond %{REQUEST_FILENAME} !.(gif|jpe?g|png|css|js)$
     RewriteRule  ^(.*) '. $maintenanceFile .' [R=503,L]
     ErrorDocument 503 '. $maintenanceFile . '
 </IfModule>'
-                .self::HTACCESS_MARKER_END;
+                .PHP_EOL.self::HTACCESS_MARKER_END;
     }
 
     /**
