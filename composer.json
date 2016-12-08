@@ -5,7 +5,7 @@
 	"type"             : "composer-scripts",
 	"license"          : "GPL-3.0",
 	"minimum-stability": "dev",
-	"version"		   : "0.0.6",
+	"version"		   : "0.0.7",
 	"authors"          : [
 		{
 			"name" : "Ondrej Grosko",
